@@ -1,0 +1,43 @@
+import React, { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+
+const socket = io('http://localhost:5000'); // change this to your backend URL when deployed
+
+const containerStyle = {
+  width: '100vw',
+  height: '100vh'
+};
+
+const center = {
+  lat: 51.5074,
+  lng: -0.1278
+};
+
+function App() {
+  const [trafficData, setTrafficData] = useState(null);
+
+  useEffect(() => {
+    socket.on('trafficData', data => {
+      setTrafficData(data);
+      console.log('Received traffic data:', data);
+    });
+
+    return () => socket.off('trafficData');
+  }, []);
+
+  return (
+    <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
+      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
+        {trafficData && (
+          <Marker
+            position={trafficData.location}
+            label={`${trafficData.congestionLevel}%`}
+          />
+        )}
+      </GoogleMap>
+    </LoadScript>
+  );
+}
+
+export default App;
