@@ -1,0 +1,19 @@
+const axios = require('axios');
+
+async function fetchRealTrafficData() {
+  try {
+    const response = await axios.get('YOUR_TRAFFIC_API_ENDPOINT_WITH_KEY');
+    // Transform data as needed to {location: {lat, lng}, congestionLevel}
+    return transformedData;
+  } catch (error) {
+    console.error('Traffic API error:', error);
+    return null;
+  }
+}
+
+io.on('connection', socket => {
+  setInterval(async () => {
+    const data = await fetchRealTrafficData();
+    if (data) socket.emit('trafficData', data);
+  }, 10000);
+});
