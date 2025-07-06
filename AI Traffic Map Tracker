@@ -9,7 +9,7 @@ export default function AITrafficMap() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Replace with your live vehicle tracking API or mock
+      // Replace with your live vehicle tracking API 
       const { data } = await axios.get('/api/mock-vehicles');
       setVehicles(data);
     };
