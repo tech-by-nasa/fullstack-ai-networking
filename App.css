@@ -1,0 +1,13 @@
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
+  background: #0d1117;
+  color: #fff;
+}
+h2 {
+  margin: 0;
+  padding: 10px;
+  background: #161b22;
+}
